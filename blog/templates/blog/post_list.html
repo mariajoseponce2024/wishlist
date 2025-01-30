@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Posts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">✯ WISHES ✯</h1>
+        <a href="{% url 'post_create' %}" class="btn btn-primary mb-3">Create a new Wish</a>
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <small class="text-muted">{{ post.created_at }}</small>
+                            <p class="card-text mt-2">{{ post.content }}</p>
+                            <!-- Botón de Edición -->
+                            <a href="{% url 'post_edit' post.id %}" class="btn btn-warning btn-sm">Edit</a>
+                            <!-- Botón de Eliminación con Modal -->
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ post.id }}">
+                                Wish Fulfilled
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal de Confirmación de Eliminación -->
+                <div class="modal fade" id="deleteModal{{ post.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ post.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel{{ post.id }}">¿Estás seguro de que quieres eliminar este post?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>E
+                                    You are about to eliminate this Wish: <strong>{{ post.title }}</strong>. This action cannot be undone.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <form method="post" action="{% url 'post_delete' post.id %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">yes, delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (necesario para el modal) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
