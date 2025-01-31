@@ -13,7 +13,7 @@ SECRET_KEY = '7#0tsum)##6pkbem0cpod%2a-d!lg92fzwdj%e&87cv0m&6ass'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['wishlist-wvng.onrender.com']
 
 
 # Application definition
